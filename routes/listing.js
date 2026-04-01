@@ -7,12 +7,24 @@ const {listingSchema,reviewSchema} = require("../schema.js");
 const listingController = require("../controller/listings.js");
 const multer = require("multer");
 const {storage} = require("../cloudConfig.js");
-const upload =  multer( {storage} );
+// const upload =  multer( {storage} );
+const upload = multer({ dest: 'uploads/' });
+
+module.exports.isLoggedIn = (req, res, next) => {
+  console.log("isLoggedIn middleware hit");
+  if (!req.isAuthenticated()) {
+    req.flash("error", "You must be signed in");
+    return res.redirect("/login");
+  }
+  next();
+};
+
+
 // INDEX ROUTE
 router.route("/")
 .get(wrapAsync(listingController.index) )
 // FOR CREATE
-.post(isLoggedIn, upload.single("listing[image]"), validateListing, wrapAsync(listingController.createListing))
+.post(isLoggedIn, upload.single("image"), validateListing, wrapAsync(listingController.createListing))
 
 
 // .post(isLoggedIn,upload.single("listing[image]"),validateListing,wrapAsync(listingController.createListing) );

@@ -32,6 +32,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
+app.use("/uploads", express.static("uploads"));
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -94,18 +95,28 @@ app.get("/", (req, res) => {
 });
 
         // ✅ Server Start
-        app.listen(8080, () => {
-            console.log("🚀 Server is running on port 8080");
-        });
+      const PORT = process.env.PORT || 8080;
 
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
     } catch (err) {
         console.error("❌ MongoDB connection error:", err.message);
     }
 }
 main();
 
+
+// ✅ Error Handler
+
+// app.use((err, req, res, next) => {
+//     const { statusCode = 500, message = "Something went wrong!" } = err;
+//     res.status(statusCode).render("error.ejs", { message });
+// });
 // ✅ Error Handler
 app.use((err, req, res, next) => {
-    const { statusCode = 500, message = "Something went wrong!" } = err;
-    res.status(statusCode).render("error.ejs", { message });
+    console.error(err);   // <-- log full error in terminal
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Oh No, Something Went Wrong!";
+    res.status(statusCode).render("error.ejs", { message: err.message });
 });
