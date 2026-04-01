@@ -4,7 +4,7 @@ body{
    flex-direction: column;
    min-height: 100vh;
 }
-.conainer{
+.container{
   flex: 1;
 }
  .navbar{
@@ -100,3 +100,58 @@ justify-content: center;
   padding-left: 0;
   padding-right: 0;
  }
+ /* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 768px) {
+
+  /* Navbar */
+  .navbar {
+    height: auto;
+    padding: 1rem;
+  }
+
+  /* Container fix (typo bhi fix) */
+  .container {
+    padding: 0 1rem;
+  }
+
+  /* Cards */
+  .listing-card {
+    margin-bottom: 1rem;
+  }
+
+  /* Image */
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  /* Footer */
+  .f-info {
+    height: auto;
+    padding: 1rem;
+  }
+
+  .f-info-links,
+  .f-info-brand,
+  .f-info-socials {
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Show page */
+  .show-img {
+    height: 200px;
+  }
+
+  /* Buttons */
+  .btns {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btns a,
+  .btns button {
+    width: 100%;
+  }
+
+}
